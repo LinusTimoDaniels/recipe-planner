@@ -14,7 +14,7 @@ import java.util.UUID;
 @RestController
 @Slf4j
 
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"*"})
 public class RecipeController {
 
     private final RecipeService service;
