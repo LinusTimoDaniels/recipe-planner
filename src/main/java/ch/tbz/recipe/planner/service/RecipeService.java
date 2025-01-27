@@ -37,16 +37,13 @@ public class RecipeService {
     }
 
     public RecipeEntity updateRecipe(UUID recipeId, Recipe recipe) throws NoSuchObjectException {
-        // Fetch the existing recipe from the repository
         RecipeEntity existingRecipe = repository.findById(recipeId)
                 .orElseThrow(() -> new NoSuchObjectException("Recipe not found with id " + recipeId));
 
-        // Update the existing recipe with new values
         existingRecipe.setName(recipe.getName());
         existingRecipe.setDescription(recipe.getDescription());
         existingRecipe.setImageUrl(recipe.getImageUrl());
 
-        // Save the updated recipe back to the repository
         return repository.save(existingRecipe);
     }
 
