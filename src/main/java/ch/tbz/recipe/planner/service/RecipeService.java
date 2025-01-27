@@ -6,6 +6,7 @@ import ch.tbz.recipe.planner.repository.RecipeRepository;
 import ch.tbz.recipe.planner.domain.Recipe;
 import org.springframework.stereotype.Service;
 
+import java.rmi.NoSuchObjectException;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,4 +35,16 @@ public class RecipeService {
         var createdRecipe = repository.save(mapper.domainToEntity(recipe));
         return mapper.entityToDomain(createdRecipe);
     }
+
+    public RecipeEntity updateRecipe(UUID recipeId, Recipe recipe) throws NoSuchObjectException {
+        RecipeEntity existingRecipe = repository.findById(recipeId)
+                .orElseThrow(() -> new NoSuchObjectException("Recipe not found with id " + recipeId));
+
+        existingRecipe.setName(recipe.getName());
+        existingRecipe.setDescription(recipe.getDescription());
+        existingRecipe.setImageUrl(recipe.getImageUrl());
+
+        return repository.save(existingRecipe);
+    }
+
 }
